@@ -14,14 +14,14 @@ public class DBUtil {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/scotrun?useSSL=false&serverTimezone=UTC",
+					"jdbc:mysql://cdb-ah23ypr7.gz.tencentcdb.com:10022/scotrun?useSSL=false&serverTimezone=UTC",
 					"root", "Cxg19990707"
 					);
 		} catch (Exception e) { e.printStackTrace(); }
 		return con;
 	}
 	
-//	判断是否是用户
+	// 判断是否是用户
 	public static Boolean isUser(String info) {
 		Connection con = null;
 		Statement st = null;
@@ -35,6 +35,28 @@ public class DBUtil {
 			rs = st.executeQuery(sql);
 			while (rs.next()) return true;
 		} catch (Exception e) { e.printStackTrace(); }
+		finally {
+			try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
+			try { st.close(); } catch (SQLException e) { e.printStackTrace(); }
+			try { con.close(); } catch (SQLException e) { e.printStackTrace(); }
+		}
+		return false;
+	}
+
+	// 判断是否是管理员
+	public static Boolean isManager(String info) {
+		Connection con=null;							
+		Statement st = null;
+		ResultSet rs = null;
+		String[] str = info.split("<#>");
+		try {
+			con = getConnection();
+			st = con.createStatement();
+			String sql = "select * from manager where uid='" + str[0]
+					+ "' and pwd='" + str[1] + "';";
+			rs = st.executeQuery(sql);
+			while (rs.next()) return true;
+		} catch (Exception e) {e.printStackTrace();} 
 		finally {
 			try { rs.close(); } catch (Exception e) { e.printStackTrace(); }
 			try { st.close(); } catch (SQLException e) { e.printStackTrace(); }
