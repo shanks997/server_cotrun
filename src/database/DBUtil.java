@@ -20,7 +20,9 @@ public class DBUtil {
 			// ÌÚÑ¶ÔÆ
 //			url = "jdbc:mysql://cdb-ah23ypr7.gz.tencentcdb.com:10022/scotrun?useSSL=false&serverTimezone=UTC";
 			// ÌÚÑ¶ÔÆ2
-			url = "jdbc:mysql://sh-cdb-f39noah4.sql.tencentcdb.com:61692/scotrun?useSSL=false&serverTimezone=UTC";
+//			url = "jdbc:mysql://sh-cdb-f39noah4.sql.tencentcdb.com:61692/scotrun?useSSL=false&serverTimezone=UTC";
+			// °¢ÀïÔÆ
+			url = "jdbc:mysql://rm-bp1963290wwbi7tleio.mysql.rds.aliyuncs.com:3306/scotrun?useSSL=false&serverTimezone=UTC";
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, "root", "Cxg19990707");
 		} catch (Exception e) { e.printStackTrace(); }
@@ -106,7 +108,7 @@ public class DBUtil {
 		StringBuffer sb = new StringBuffer();
 		try {
 			st = con.createStatement();
-			String sql = "select uid,pwd,avatar,attention,fans,menu,random,menuc,randomc from user where uid='"
+			String sql = "select uid,pwd,avatar from user where uid='"
 					+ info + "'";
 			rs = st.executeQuery(sql);
 			if (rs.next()) {
